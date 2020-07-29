@@ -12,7 +12,7 @@ function calculateTax(price, taxRate) {
 
 /* 해당 함수는 Number 값의 두배를 반환합니다. */
 function double(value) {
-    if(value !== Number(value)) throw new TypeError(value + ' is not a number.')
+    if (value !== Number(value)) throw new TypeError(value + ' is not a number')
     return (value * 2)
 }
 
