@@ -23,17 +23,34 @@ export function filter(array, fn){
 }
 
 export function flat(array){
-  let pointer = 0;
-  let newArray = new Array(absLen(array, 0, 0))
+  const stack = [...array]
+  const newArray = []
+  while(stack.length){
+    const next = stack.pop()
+    Array.isArray(next) 
+      ? stack.push(...next) 
+      : newArray.unshift(next)
+  }
+  return newArray
 }
 
-export function absLen(array, start, acc){
-  for(start; start < array.length; start++){
-    if(Array.isArray(array[start])){
-      absLen(array[start], start+1, acc)
-    } else {
-      acc += 1
-    }
+export function reduce(array, fn, initial){
+  const hasInitial = ![null,undefined].includes(initial)
+  let acc = (hasInitial ? initial : array[0])
+  for(let i = (hasInitial ? 1 : 0); i < array.length; i++){
+    acc = fn(acc, array[i])
   }
   return acc
 }
+
+export function zip(l1, l2, fn){
+  const minLen = Math.min(l1.length, l2.length)
+  const newArray = new Array(minLen)
+  for(let i = 0; i < minLen; i++){
+    newArray[i] = fn(l1[i], l2[i])
+  }
+  return newArray
+}
+
+
+
